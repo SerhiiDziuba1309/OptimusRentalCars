@@ -1,63 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { getBrands } from "../services/api";
+import { useEffect, useState } from "react";
 import styles from "../styles/FilterBar.module.css";
+import { getBrands } from "../services/api";
 
 const FilterBar = ({ onFilterChange }) => {
   const [brands, setBrands] = useState([]);
   const [brand, setBrand] = useState("");
+  const [price, setPrice] = useState("");
   const [minMileage, setMinMileage] = useState("");
   const [maxMileage, setMaxMileage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBrands = async () => {
-      try {
-        setLoading(true);
-        const brandsList = await getBrands();
-        setBrands(brandsList);
-      } catch (err) {
-        setError("Не удалось загрузить бренды.");
-      } finally {
-        setLoading(false);
-      }
+      const list = await getBrands();
+      setBrands(list);
     };
-
     fetchBrands();
   }, []);
 
-  const handleApplyFilters = () => {
-    onFilterChange({ brand, minMileage, maxMileage });
+  const handleSearch = () => {
+    onFilterChange({ brand, price, minMileage, maxMileage });
   };
 
-  if (loading) return <div>Загрузка фильтров...</div>;
-  if (error) return <div>{error}</div>;
-
   return (
-    <div className={styles.container}>
-      <select value={brand} onChange={(e) => setBrand(e.target.value)}>
-        <option value="">Все бренды</option>
-        {brands.map((b) => (
-          <option key={b} value={b}>
-            {b}
-          </option>
-        ))}
-      </select>
+    <div className={styles.filterBar}>
+      <div className={styles.group}>
+        <label>Car brand</label>
+        <select value={brand} onChange={(e) => setBrand(e.target.value)}>
+          <option value="">Choose a brand</option>
+          {brands.map((b) => (
+            <option key={b} value={b}>
+              {b}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <input
-        type="number"
-        placeholder="Минимальный пробег"
-        value={minMileage}
-        onChange={(e) => setMinMileage(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Максимальный пробег"
-        value={maxMileage}
-        onChange={(e) => setMaxMileage(e.target.value)}
-      />
+      <div className={styles.group}>
+        <label>Price / 1 hour</label>
+        <select value={price} onChange={(e) => setPrice(e.target.value)}>
+          <option value="">Choose a price</option>
+          <option value="30">up to $30</option>
+          <option value="50">up to $50</option>
+          <option value="100">up to $100</option>
+        </select>
+      </div>
 
-      <button onClick={handleApplyFilters}>Применить фильтры</button>
+      <div className={styles.group}>
+        <label>Car mileage / km</label>
+        <div className={styles.range}>
+          <input
+            type="number"
+            placeholder="From"
+            value={minMileage}
+            onChange={(e) => setMinMileage(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="To"
+            value={maxMileage}
+            onChange={(e) => setMaxMileage(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <button className={styles.searchButton} onClick={handleSearch}>
+        Search
+      </button>
     </div>
   );
 };

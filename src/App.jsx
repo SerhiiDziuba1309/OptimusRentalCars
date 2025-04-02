@@ -1,7 +1,13 @@
-import AppRouter from "./routes/AppRouter.jsx";
+import Header from "./components/Header";
+import AppRouter from "./routes/AppRouter";
 
 const App = () => {
-  return <AppRouter />;
+  return (
+    <>
+      <Header />
+      <AppRouter />
+    </>
+  );
 };
 
 export default App;

@@ -6,8 +6,8 @@ const HomePage = () => {
     <section className={styles.hero}>
       <div className={styles.overlay}>
         <div className={styles.content}>
-          <h1>Find your perfect car</h1>
-          <p>Explore our catalog and rent the best car for your journey</p>
+          <h1>Find your perfect rental car</h1>
+          <p>Reliable and budget-friendly rentals for any journey</p>
           <Link to="/catalog" className={styles.ctaButton}>
             View Catalog
           </Link>
