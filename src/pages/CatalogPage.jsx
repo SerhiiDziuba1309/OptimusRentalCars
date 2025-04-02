@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCars, setFilters, nextPage } from "../store/carsSlice.js";
 import FilterBar from "../components/FilterBar.jsx";
-import styles from "../styles/CatalogPage.module.css";
 import CarCard from "../components/CarCard.jsx";
+import styles from "../styles/CatalogPage.module.css";
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const CatalogPage = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchCars({ filters, page }));
+    dispatch(fetchCars());
   }, [filters, page, dispatch]);
 
   const handleFilterChange = (newFilters) => {
@@ -27,7 +27,7 @@ const CatalogPage = () => {
     <div className={styles.container}>
       <FilterBar onFilterChange={handleFilterChange} />
 
-      {status === "loading" && <div>Loading...</div>}
+      {status === "loading" && list.length === 0 && <div>Loading...</div>}
       {error && <div>{error}</div>}
 
       <div className={styles.grid}>
@@ -37,8 +37,8 @@ const CatalogPage = () => {
       </div>
 
       {hasMore && (
-        <button className={styles.loadMoreButton} onClick={handleLoadMore}>
-          Load More
+        <button className={styles.loadMore} onClick={handleLoadMore}>
+          Load more
         </button>
       )}
     </div>

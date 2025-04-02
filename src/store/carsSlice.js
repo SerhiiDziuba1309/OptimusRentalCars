@@ -14,7 +14,7 @@ export const fetchCars = createAsyncThunk(
       const response = await axios.get(
         `https://car-rental-api.goit.global/cars?${params}`
       );
-      return response.data;
+      return response.data.cars; // Повертаємо лише масив машин
     } catch (error) {
       return rejectWithValue("Не вдалося завантажити авто.");
     }
@@ -50,8 +50,21 @@ const carsSlice = createSlice({
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.list = [...state.list, ...action.payload];
-        if (action.payload.length < 8) {
+
+        if (Array.isArray(action.payload)) {
+          const existingIds = new Set(state.list.map((car) => car.id));
+          const newCars = action.payload.filter(
+            (car) => !existingIds.has(car.id)
+          );
+
+          state.list = [...state.list, ...newCars];
+
+          if (newCars.length < 8) {
+            state.hasMore = false;
+          }
+        } else {
+          console.error("Expected array in payload, got:", action.payload);
+          state.error = "Invalid data format";
           state.hasMore = false;
         }
       })

@@ -33,19 +33,20 @@
 .detailsButton:hover {
   background-color: #0056b3;
 }
-.loadMoreButton {
-  margin: 2rem auto;
+.loadMore {
+  margin: 40px auto;
   display: block;
-  padding: 0.75rem 2rem;
   background-color: #3470ff;
   color: white;
-  border: none;
+  padding: 14px 28px;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.loadMoreButton:hover {
+.loadMore:hover {
   background-color: #2556cc;
 }
