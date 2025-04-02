@@ -13,33 +13,54 @@ const CarCard = ({ car }) => {
     dispatch(toggleFavorite(car.id));
   };
 
+  const {
+    id,
+    img,
+    brand,
+    model,
+    year,
+    rentalPrice,
+    address,
+    rentalCompany,
+    type,
+    mileage,
+  } = car;
+
+  const city = address.split(",")[1]?.trim() || "";
+  const country = address.split(",")[2]?.trim() || "";
+
   return (
     <div className={styles.card}>
-      <div className={styles.favorite} onClick={handleToggleFavorite}>
-        {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />}
+      <div className={styles.imageWrapper}>
+        <img src={img} alt={model} className={styles.image} />
+        <button
+          className={styles.favorite}
+          onClick={handleToggleFavorite}
+          aria-label="Toggle favorite"
+        >
+          {isFavorite ? <FaHeart color="#3470ff" /> : <FaRegHeart />}
+        </button>
       </div>
-
-      <img src={car.img} alt={car.model} className={styles.image} />
 
       <div className={styles.info}>
         <div className={styles.titleRow}>
           <h3>
-            {car.brand} {car.model}
+            {brand} <span className={styles.model}>{model}</span>, {year}
           </h3>
-          <span className={styles.price}>${car.rentalPrice}</span>
+          <span className={styles.price}>
+            {rentalPrice.startsWith("$") ? rentalPrice : `$${rentalPrice}`}
+          </span>
         </div>
 
-        <p className={styles.description}>
-          {car.description.length > 100
-            ? `${car.description.slice(0, 100)}...`
-            : car.description}
-        </p>
+        <ul className={styles.specs}>
+          <li>{city}</li>
+          <li>{country}</li>
+          <li>{rentalCompany}</li>
+          <li>{type}</li>
+          <li>{Number(mileage).toLocaleString("en-US")} km</li>
+        </ul>
 
-        <p className={styles.mileage}>
-          Пробіг: {car.mileage.toLocaleString("en-US")} km
-        </p>
-
-        <Link to={`/catalog/${car.id}`} className={styles.button}>
+        <Link to={`/catalog/${id}`} className={styles.readMore}>
           Read more
         </Link>
       </div>

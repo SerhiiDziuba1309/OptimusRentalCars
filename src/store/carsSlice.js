@@ -3,15 +3,20 @@ import axios from "axios";
 
 export const fetchCars = createAsyncThunk(
   "cars/fetchCars",
-  async ({ filters, page }, thunkAPI) => {
+  async (_, { getState, rejectWithValue }) => {
+    const { filters, page } = getState().cars;
     try {
-      const params = new URLSearchParams({ ...filters, page });
+      const params = new URLSearchParams({
+        ...filters,
+        page,
+        limit: 8,
+      });
       const response = await axios.get(
         `https://car-rental-api.goit.global/cars?${params}`
       );
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue("Не вдалося завантажити авто");
+      return rejectWithValue("Не вдалося завантажити авто.");
     }
   }
 );
@@ -20,7 +25,7 @@ const carsSlice = createSlice({
   name: "cars",
   initialState: {
     list: [],
-    filters: { brand: "", minMileage: "", maxMileage: "" },
+    filters: { brand: "", price: "", minMileage: "", maxMileage: "" },
     page: 1,
     status: "idle",
     error: null,
@@ -28,7 +33,7 @@ const carsSlice = createSlice({
   },
   reducers: {
     setFilters: (state, action) => {
-      state.filters = { ...state.filters, ...action.payload };
+      state.filters = { ...action.payload };
       state.page = 1;
       state.list = [];
       state.hasMore = true;
@@ -45,14 +50,8 @@ const carsSlice = createSlice({
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
         state.status = "succeeded";
-
-        if (state.page === 1) {
-          state.list = action.payload.cars;
-        } else {
-          state.list = [...state.list, ...action.payload.cars];
-        }
-
-        if (action.payload.cars.length < 12) {
+        state.list = [...state.list, ...action.payload];
+        if (action.payload.length < 8) {
           state.hasMore = false;
         }
       })

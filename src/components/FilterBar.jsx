@@ -17,8 +17,22 @@ const FilterBar = ({ onFilterChange }) => {
     fetchBrands();
   }, []);
 
+  const formatMileage = (value) => {
+    if (!value) return "";
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const cleanMileage = (value) => {
+    return value.replace(/[^\d]/g, ""); // залишає тільки цифри
+  };
+
   const handleSearch = () => {
-    onFilterChange({ brand, price, minMileage, maxMileage });
+    onFilterChange({
+      brand,
+      price,
+      minMileage: cleanMileage(minMileage),
+      maxMileage: cleanMileage(maxMileage),
+    });
   };
 
   return (
@@ -39,26 +53,32 @@ const FilterBar = ({ onFilterChange }) => {
         <label>Price / 1 hour</label>
         <select value={price} onChange={(e) => setPrice(e.target.value)}>
           <option value="">Choose a price</option>
-          <option value="30">up to $30</option>
-          <option value="50">up to $50</option>
-          <option value="100">up to $100</option>
+          {[30, 40, 50, 60, 70, 80, 90, 100].map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
         </select>
       </div>
 
       <div className={styles.group}>
         <label>Car mileage / km</label>
-        <div className={styles.range}>
+        <div className={styles.rangeInputs}>
           <input
-            type="number"
+            type="text"
+            value={minMileage ? `From ${formatMileage(minMileage)}` : ""}
+            onChange={(e) =>
+              setMinMileage(cleanMileage(e.target.value.replace("From ", "")))
+            }
             placeholder="From"
-            value={minMileage}
-            onChange={(e) => setMinMileage(e.target.value)}
           />
           <input
-            type="number"
+            type="text"
+            value={maxMileage ? `To ${formatMileage(maxMileage)}` : ""}
+            onChange={(e) =>
+              setMaxMileage(cleanMileage(e.target.value.replace("To ", "")))
+            }
             placeholder="To"
-            value={maxMileage}
-            onChange={(e) => setMaxMileage(e.target.value)}
           />
         </div>
       </div>

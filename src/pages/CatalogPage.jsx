@@ -25,8 +25,6 @@ const CatalogPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Car Catalog</h1>
-
       <FilterBar onFilterChange={handleFilterChange} />
 
       {status === "loading" && <div>Loading...</div>}

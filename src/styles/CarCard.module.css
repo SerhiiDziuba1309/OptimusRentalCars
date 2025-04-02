@@ -1,73 +1,101 @@
 .card {
-  border: 1px solid #ddd;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  height: 424px;
+  width: 276px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: 28px;
   position: relative;
+
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.imageWrapper {
+  position: relative;
+  height: 268px;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
 }
 
+.favorite {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .info {
-  padding: 1rem;
+  padding: 14px 16px 16px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  gap: 14px;
 }
 
 .titleRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
-.price {
-  font-weight: bold;
+.titleRow h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.model {
   color: #3470ff;
 }
 
-.description {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  color: #333;
+.price {
+  font-weight: 600;
+  font-size: 16px;
 }
 
-.mileage {
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: auto;
+.specs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color: #8a8a89;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
 }
 
-.button {
-  margin-top: 1rem;
+.specs li::after {
+  content: "|";
+  margin-left: 8px;
+}
+
+.specs li:last-child::after {
+  content: "";
+  margin: 0;
+}
+
+.readMore {
+  display: block;
   background-color: #3470ff;
   color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
   text-align: center;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
   text-decoration: none;
   transition: background-color 0.3s ease;
-  cursor: pointer;
 }
 
-.button:hover {
+.readMore:hover {
   background-color: #2556cc;
-}
-.favorite {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 1.5rem;
-  z-index: 1;
 }
