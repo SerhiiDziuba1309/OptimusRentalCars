@@ -17,7 +17,7 @@ const BookingForm = ({ onSubmit }) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
-        <label htmlFor="name">Ваше имя</label>
+        <label htmlFor="name">Ім'я</label>
         <input
           type="text"
           id="name"
@@ -26,6 +26,7 @@ const BookingForm = ({ onSubmit }) => {
           required
         />
       </div>
+
       <div className={styles.formGroup}>
         <label htmlFor="email">Email</label>
         <input
@@ -36,6 +37,7 @@ const BookingForm = ({ onSubmit }) => {
           required
         />
       </div>
+
       <div className={styles.formGroup}>
         <label htmlFor="phone">Телефон</label>
         <input
@@ -46,8 +48,9 @@ const BookingForm = ({ onSubmit }) => {
           required
         />
       </div>
+
       <button type="submit" className={styles.submitButton}>
-        Орендовать
+        Орендувати
       </button>
     </form>
   );

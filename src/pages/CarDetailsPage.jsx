@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "../styles/CarDetailsPage.module.css";
+import BookingForm from "../components/BookingForm";
 
 const CarDetailsPage = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const CarDetailsPage = () => {
         );
         setCar(response.data);
       } catch (err) {
-        setError("Не удалось загрузить данные автомобиля.");
+        setError("Не вдалося завантажити дані автомобіля.");
       } finally {
         setLoading(false);
       }
@@ -27,9 +28,15 @@ const CarDetailsPage = () => {
     fetchCarDetails();
   }, [id]);
 
-  if (loading) return <div>Загрузка деталей автомобиля...</div>;
+  const handleBookingSubmit = (data) => {
+    alert(
+      `Бронювання успішне!\nІм'я: ${data.name}\nEmail: ${data.email}\nТелефон: ${data.phone}`
+    );
+  };
+
+  if (loading) return <div>Завантаження деталей автомобіля...</div>;
   if (error) return <div>{error}</div>;
-  if (!car) return <div>Автомобиль не найден</div>;
+  if (!car) return <div>Автомобіль не знайдено</div>;
 
   return (
     <div className={styles.container}>
@@ -45,11 +52,15 @@ const CarDetailsPage = () => {
         <strong>Двигун:</strong> {car.engineSize}
       </p>
       <p>
-        <strong>Пробіг:</strong> {car.mileage.toLocaleString()} km
+        <strong>Пробіг:</strong> {car.mileage.toLocaleString("en-US")} km
       </p>
       <p>
         <strong>Аксесуари:</strong> {car.accessories.join(", ")}
       </p>
+
+      {/* Форма бронювання */}
+      <h2>Забронювати автомобіль</h2>
+      <BookingForm onSubmit={handleBookingSubmit} />
     </div>
   );
 };

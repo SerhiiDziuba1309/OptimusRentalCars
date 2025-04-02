@@ -1,44 +1,48 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCars, setFilters } from "../store/carsSlice.js";
+import { fetchCars, setFilters, nextPage } from "../store/carsSlice.js";
 import FilterBar from "../components/FilterBar.jsx";
-import { Link } from "react-router-dom";
 import styles from "../styles/CatalogPage.module.css";
+import CarCard from "../components/CarCard.jsx";
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
-  const { list, status, error, filters } = useSelector((state) => state.cars);
+  const { list, status, error, filters, page, hasMore } = useSelector(
+    (state) => state.cars
+  );
 
-  // Вызываем fetchCars при изменении фильтров
   useEffect(() => {
-    dispatch(fetchCars(filters));
-  }, [filters, dispatch]);
+    dispatch(fetchCars({ filters, page }));
+  }, [filters, page, dispatch]);
 
-  // Функция для обработки изменений фильтров
   const handleFilterChange = (newFilters) => {
     dispatch(setFilters(newFilters));
   };
-  <FilterBar onFilterChange={handleFilterChange} />;
+
+  const handleLoadMore = () => {
+    dispatch(nextPage());
+  };
+
   return (
     <div className={styles.container}>
       <h1>Car Catalog</h1>
-      {/* Передаем handleFilterChange в FilterBar */}
+
       <FilterBar onFilterChange={handleFilterChange} />
+
       {status === "loading" && <div>Loading...</div>}
       {error && <div>{error}</div>}
+
       <div className={styles.grid}>
         {list.map((car) => (
-          <div key={car.id} className={styles.card}>
-            <h2>
-              {car.brand} {car.model}
-            </h2>
-            <p>{car.description}</p>
-            <Link to={`/catalog/${car.id}`} className={styles.detailsButton}>
-              View Details
-            </Link>
-          </div>
+          <CarCard key={car.id} car={car} />
         ))}
       </div>
+
+      {hasMore && (
+        <button className={styles.loadMoreButton} onClick={handleLoadMore}>
+          Load More
+        </button>
+      )}
     </div>
   );
 };

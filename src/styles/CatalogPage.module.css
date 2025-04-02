@@ -26,8 +26,25 @@
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .detailsButton:hover {
   background-color: #0056b3;
+}
+.loadMoreButton {
+  margin: 2rem auto;
+  display: block;
+  padding: 0.75rem 2rem;
+  background-color: #3470ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #2556cc;
 }

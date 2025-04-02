@@ -3,13 +3,17 @@ import styles from "../styles/HomePage.module.css";
 
 const HomePage = () => {
   return (
-    <div className={styles.container}>
-      <h1>Welcome to Optimus Rental Cars</h1>
-      <p>Find your perfect car for any journey.</p>
-      <Link to="/catalog" className={styles.button}>
-        View Catalog
-      </Link>
-    </div>
+    <section className={styles.hero}>
+      <div className={styles.overlay}>
+        <div className={styles.content}>
+          <h1>Find your perfect car</h1>
+          <p>Explore our catalog and rent the best car for your journey</p>
+          <Link to="/catalog" className={styles.ctaButton}>
+            View Catalog
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 };
 
