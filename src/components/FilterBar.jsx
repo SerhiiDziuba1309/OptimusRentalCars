@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/FilterBar.module.css";
 import { getBrands } from "../services/api";
 
@@ -23,7 +23,7 @@ const FilterBar = ({ onFilterChange }) => {
   };
 
   const cleanMileage = (value) => {
-    return value.replace(/[^\d]/g, ""); // залишає тільки цифри
+    return value.replace(/[^\d]/g, "");
   };
 
   const handleSearch = () => {
