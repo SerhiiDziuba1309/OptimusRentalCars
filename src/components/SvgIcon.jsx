@@ -1,7 +1,7 @@
-const SvgIcon = ({ name, size = 16, className = "" }) => {
+const SvgIcon = ({ name, className = "", size = 16 }) => {
   return (
-    <svg className={className} width={size} height={size} aria-hidden="true">
-      <use href={`/src/assets/icons/sprite.svg#${name}`} />
+    <svg className={className} width={size} height={size}>
+      <use href={`/icons/sprite.svg#${name}`} />
     </svg>
   );
 };
