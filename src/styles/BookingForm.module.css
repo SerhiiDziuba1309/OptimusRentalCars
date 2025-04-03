@@ -1,25 +1,112 @@
 .form {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #f7f7f7;
-  border-radius: 12px;
-}
-
-.formGroup {
+  background-color: #ffffff;
+  width: 640px;
+  height: 512px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  gap: 24px;
+  border-radius: 10px;
+  position: relative;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-.submitButton {
-  background-color: #3470ff;
-  color: white;
-  padding: 0.75rem;
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #121417;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8a8a89;
+  margin: 8px 0 24px;
+  line-height: 1.5;
+}
+
+.input {
+  background-color: #f7f7f7;
+  height: 48px;
+  width: 576px;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
   border: none;
-  border-radius: 10px;
+  outline: none;
+  color: #121417;
+  box-sizing: border-box;
+}
+
+.date::-webkit-calendar-picker-indicator {
+  filter: invert(0.3);
   cursor: pointer;
 }
 
-.submitButton:hover {
-  background-color: #2556cc;
+.textarea {
+  background-color: #f7f7f7;
+  height: 88px;
+  width: 576px;
+  border-radius: 12px;
+  padding: 12px 20px 56px 20px;
+  resize: none;
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  color: #121417;
+  border: none;
+  outline: none;
+}
+
+.button {
+  background-color: #3470ff;
+  height: 44px;
+  width: 156px;
+  border-radius: 12px;
+  padding: 12px 51px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.datePickerWrapper {
+  width: 100%;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  background-color: #f7f7f7;
+  height: 48px;
+  width: 576px;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  color: #121417;
+  border: none;
+  outline: none;
+}
+.dateInput {
+  background-color: #f7f7f7;
+  height: 48px;
+  width: 576px;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  border: none;
+  outline: none;
+  color: #121417;
+  box-sizing: border-box;
 }

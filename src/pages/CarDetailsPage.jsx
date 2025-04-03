@@ -1,66 +1,116 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../styles/CarDetailsPage.module.css";
-import BookingForm from "../components/BookingForm";
+import BookingForm from "../components/BookingForm.jsx";
+import SvgIcon from "../components/SvgIcon.jsx";
 
 const CarDetailsPage = () => {
   const { id } = useParams();
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCarDetails = async () => {
+    const fetchCar = async () => {
       try {
-        setLoading(true);
         const response = await axios.get(
           `https://car-rental-api.goit.global/cars/${id}`
         );
+
         setCar(response.data);
-      } catch (err) {
-        setError("Не вдалося завантажити дані автомобіля.");
+      } catch (error) {
+        console.error("Error loading car:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCarDetails();
+    fetchCar();
   }, [id]);
 
-  const handleBookingSubmit = (data) => {
-    alert(
-      `Бронювання успішне!\nІм'я: ${data.name}\nEmail: ${data.email}\nТелефон: ${data.phone}`
-    );
-  };
-
-  if (loading) return <div>Завантаження деталей автомобіля...</div>;
-  if (error) return <div>{error}</div>;
-  if (!car) return <div>Автомобіль не знайдено</div>;
+  if (loading || !car) return <div className={styles.loading}>Loading...</div>;
 
   return (
-    <div className={styles.container}>
-      <h1>
-        {car.brand} {car.model}
-      </h1>
-      <img src={car.img} alt={car.model} className={styles.image} />
-      <p>{car.description}</p>
-      <p>
-        <strong>Ціна за добу:</strong> ${car.rentalPrice}
-      </p>
-      <p>
-        <strong>Двигун:</strong> {car.engineSize}
-      </p>
-      <p>
-        <strong>Пробіг:</strong> {car.mileage.toLocaleString("en-US")} km
-      </p>
-      <p>
-        <strong>Аксесуари:</strong> {car.accessories.join(", ")}
-      </p>
+    <div className={styles.wrapper}>
+      <div className={styles.left}>
+        <img src={car.img} alt={car.model} className={styles.image} />
+        <BookingForm />
+      </div>
 
-      {/* Форма бронювання */}
-      <h2>Забронювати автомобіль</h2>
-      <BookingForm onSubmit={handleBookingSubmit} />
+      <div className={styles.right}>
+        <h2 className={styles.title}>
+          {car.brand} {car.model}, {car.year}
+          <span className={styles.id}>Id: {car.id.slice(0, 4)}</span>
+        </h2>
+
+        <div className={styles.metaRow}>
+          <SvgIcon name="location" className={styles.icon} />
+          <span className={styles.address}>
+            {car.address.split(", ").slice(-2).join(", ")}
+          </span>
+          <span className={styles.mileage}>
+            Mileage: {car.mileage?.toLocaleString("en-US")} km
+          </span>
+        </div>
+
+        <p className={styles.price}>${car.rentalPrice}</p>
+        <p className={styles.description}>{car.description}</p>
+
+        <div className={styles.block}>
+          <h3 className={styles.sectionTitle}>Rental Conditions:</h3>
+          <ul className={styles.list}>
+            {(Array.isArray(car.rentalConditions)
+              ? car.rentalConditions
+              : [car.rentalConditions]
+            ).map((item, idx) => (
+              <li key={idx} className={styles.listItem}>
+                <SvgIcon name="check-circle" className={styles.icon} />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={styles.block}>
+          <h3 className={styles.sectionTitle}>Car Specifications:</h3>
+          <ul className={styles.list}>
+            <li className={styles.listItem}>
+              <SvgIcon name="calendar" className={styles.icon} />
+              Year: {car.year}
+            </li>
+            <li className={styles.listItem}>
+              <SvgIcon name="car" className={styles.icon} />
+              Type: {car.type}
+            </li>
+            <li className={styles.listItem}>
+              <SvgIcon name="fuel-pump" className={styles.icon} />
+              Fuel: {car.fuelConsumption}
+            </li>
+            <li className={styles.listItem}>
+              <SvgIcon name="gear" className={styles.icon} />
+              Engine: {car.engineSize}
+            </li>
+            <li className={styles.listItem}>
+              <SvgIcon name="check-circle" className={styles.icon} />
+              Accessories: {car.accessories.length}
+            </li>
+          </ul>
+        </div>
+
+        <div className={styles.block}>
+          <h3 className={styles.sectionTitle}>
+            Accessories and functionalities:
+          </h3>
+          <ul className={styles.list}>
+            {car.accessories.map((item, i) => (
+              <li key={i} className={styles.listItem}>
+                <SvgIcon name="check-circle" className={styles.icon} />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

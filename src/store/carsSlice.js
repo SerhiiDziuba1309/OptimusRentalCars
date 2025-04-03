@@ -3,20 +3,16 @@ import axios from "axios";
 
 export const fetchCars = createAsyncThunk(
   "cars/fetchCars",
-  async (_, { getState, rejectWithValue }) => {
-    const { filters, page } = getState().cars;
+  async ({ filters, page }, thunkAPI) => {
     try {
-      const params = new URLSearchParams({
-        ...filters,
-        page,
-        limit: 8,
-      });
+      const params = new URLSearchParams({ ...filters, page });
       const response = await axios.get(
         `https://car-rental-api.goit.global/cars?${params}`
       );
-      return response.data.cars; // Повертаємо лише масив машин
+      return response.data.cars;
     } catch (error) {
-      return rejectWithValue("Не вдалося завантажити авто.");
+      console.error("Error loading cars:", error);
+      return thunkAPI.rejectWithValue("Failed to load cars.");
     }
   }
 );
@@ -25,15 +21,15 @@ const carsSlice = createSlice({
   name: "cars",
   initialState: {
     list: [],
-    filters: { brand: "", price: "", minMileage: "", maxMileage: "" },
+    filters: {},
     page: 1,
+    hasMore: true,
     status: "idle",
     error: null,
-    hasMore: true,
   },
   reducers: {
     setFilters: (state, action) => {
-      state.filters = { ...action.payload };
+      state.filters = action.payload;
       state.page = 1;
       state.list = [];
       state.hasMore = true;
@@ -50,23 +46,15 @@ const carsSlice = createSlice({
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
         state.status = "succeeded";
+        const newCars = Array.isArray(action.payload) ? action.payload : [];
 
-        if (Array.isArray(action.payload)) {
-          const existingIds = new Set(state.list.map((car) => car.id));
-          const newCars = action.payload.filter(
-            (car) => !existingIds.has(car.id)
-          );
-
-          state.list = [...state.list, ...newCars];
-
-          if (newCars.length < 8) {
-            state.hasMore = false;
-          }
+        if (state.page === 1) {
+          state.list = newCars;
         } else {
-          console.error("Expected array in payload, got:", action.payload);
-          state.error = "Invalid data format";
-          state.hasMore = false;
+          state.list = [...state.list, ...newCars];
         }
+
+        state.hasMore = newCars.length >= 8;
       })
       .addCase(fetchCars.rejected, (state, action) => {
         state.status = "failed";

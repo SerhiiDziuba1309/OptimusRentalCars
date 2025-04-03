@@ -1,15 +1,134 @@
-.container {
-  max-width: 800px;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 32px 120px;
+  gap: 66px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  margin-left: 6px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  width: 488px;
 }
 
 .image {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  margin-bottom: 20px;
+  width: 640px;
+  height: 512px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #121417;
+  margin: 0 0 8px 0;
+}
+
+.id {
+  display: inline-block;
+  font-size: 14px;
+  color: #8d919a;
+  margin-left: 12px;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #121417;
+  margin-bottom: 16px;
+}
+
+.address {
+  margin-right: 16px;
+}
+
+.mileage {
+  white-space: nowrap;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3470ff;
+  margin-top: 12px;
+  margin-bottom: 32px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 68px 0;
+  color: #121417;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.block {
+  margin-bottom: 110px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #121417;
+  padding: 4px 0;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  fill: #121417;
+}
+
+.loading {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 80px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+form > h3 {
+  margin-bottom: 8px;
+}
+
+form > button {
+  margin-top: 24px;
+  align-self: flex-start;
 }
