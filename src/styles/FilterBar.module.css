@@ -65,3 +65,48 @@ select {
 .searchButton:hover {
   background-color: #2556cc;
 }
+/* adaptive */
+
+@media screen and (max-width: 1023px) {
+  .filterBar {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  select {
+    width: 240px;
+  }
+
+  .rangeInputs {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .rangeInputs input {
+    width: 240px;
+  }
+
+  .searchButton {
+    width: 240px;
+    padding: 12px 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .filterBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+
+  select,
+  .rangeInputs input,
+  .searchButton {
+    width: 100%;
+  }
+}

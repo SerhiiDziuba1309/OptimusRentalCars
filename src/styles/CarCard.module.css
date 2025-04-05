@@ -99,3 +99,69 @@
 .readMore:hover {
   background-color: #2556cc;
 }
+/* adaptive */
+
+@media (max-width: 767px) {
+  .card {
+    width: 100%;
+    height: auto;
+  }
+
+  .imageWrapper {
+    height: 200px;
+  }
+
+  .info {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .titleRow h3 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 14px;
+  }
+
+  .specs {
+    font-size: 10px;
+  }
+
+  .readMore {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .card {
+    width: 47%;
+  }
+
+  .imageWrapper {
+    height: 240px;
+  }
+
+  .info {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .titleRow h3 {
+    font-size: 15px;
+  }
+
+  .price {
+    font-size: 15px;
+  }
+
+  .specs {
+    font-size: 11px;
+  }
+
+  .readMore {
+    font-size: 15px;
+    padding: 11px 22px;
+  }
+}

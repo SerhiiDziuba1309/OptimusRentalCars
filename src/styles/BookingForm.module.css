@@ -116,3 +116,45 @@
   margin-top: 4px;
   margin-left: 4px;
 }
+/* ...adaptive... */
+
+@media (max-width: 767px) {
+  .form {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .input,
+  .textarea,
+  .dateInput,
+  .react-datepicker__input-container input {
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+    padding: 12px 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .form {
+    width: 100%;
+    height: auto;
+    padding: 28px;
+    gap: 20px;
+  }
+
+  .input,
+  .textarea,
+  .dateInput,
+  .react-datepicker__input-container input {
+    width: 100%;
+  }
+
+  .button {
+    width: 200px;
+  }
+}

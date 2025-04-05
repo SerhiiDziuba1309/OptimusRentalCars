@@ -49,3 +49,50 @@
   color: #3470ff;
   border-bottom: 2px solid #3470ff;
 }
+/* adaptive */
+
+@media screen and (max-width: 1439px) {
+  .header {
+    width: 100%;
+    padding: 24px 40px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 16px 24px;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .nav a {
+    font-size: 1rem;
+    padding: 4px 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 16px;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .nav {
+    display: none;
+  }
+}

@@ -19,3 +19,41 @@ a {
 a:hover {
   color: #003d80;
 }
+/* adaptive */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  body {
+    font-size: 15px;
+    padding: 0 24px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+}
