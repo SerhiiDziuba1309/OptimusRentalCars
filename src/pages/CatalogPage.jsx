@@ -13,7 +13,7 @@ const CatalogPage = () => {
 
   useEffect(() => {
     dispatch(setFilters({}));
-  }, [dispatch]);
+  }, []); // ПУСТО!
 
   useEffect(() => {
     dispatch(fetchCars({ filters, page }));

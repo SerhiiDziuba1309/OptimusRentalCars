@@ -6,8 +6,9 @@ export const fetchCars = createAsyncThunk(
   async ({ filters, page }, thunkAPI) => {
     try {
       const response = await axios.get(
-        "https://car-rental-api.goit.global/cars"
+        `https://car-rental-api.goit.global/cars?page=${page}`
       );
+
       const allCars = Array.isArray(response.data.cars)
         ? response.data.cars
         : [];
@@ -29,12 +30,15 @@ export const fetchCars = createAsyncThunk(
         return matchBrand && matchPrice && matchMin && matchMax;
       });
 
-      const pageSize = 8;
-      const start = (page - 1) * pageSize;
-      const end = start + pageSize;
-      const paginated = filtered.slice(start, end);
+      const total = response.data.totalCars;
+      const pageSize = 12;
 
-      return { cars: paginated, total: filtered.length, filters };
+      return {
+        cars: filtered,
+        total,
+        page,
+        pageSize,
+      };
     } catch (error) {
       console.error("Error loading cars:", error);
       return thunkAPI.rejectWithValue("Failed to load cars.");
@@ -70,35 +74,19 @@ const carsSlice = createSlice({
       .addCase(fetchCars.pending, (state) => {
         state.status = "loading";
         state.error = null;
-        state.noMatchReason = "";
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { cars, total, filters } = action.payload;
+        const { cars, total, page } = action.payload;
 
-        if (state.page === 1) {
+        if (page === 1) {
           state.list = cars;
         } else {
           state.list = [...state.list, ...cars];
         }
 
         state.hasMore = state.list.length < total;
-
-        if (cars.length === 0) {
-          const { brand, price, minMileage, maxMileage } = filters;
-
-          if (brand && !price && !minMileage && !maxMileage) {
-            state.noMatchReason = `No cars found for brand "${brand}".`;
-          } else if (price && !brand && !minMileage && !maxMileage) {
-            state.noMatchReason = `No cars found with price $${price} per hour.`;
-          } else if ((minMileage || maxMileage) && !brand && !price) {
-            state.noMatchReason = `No cars found within the specified mileage range.`;
-          } else {
-            state.noMatchReason = `No cars match the selected filters. Try adjusting brand, price or mileage range.`;
-          }
-        } else {
-          state.noMatchReason = "";
-        }
+        state.noMatchReason = state.list.length === 0 ? "No cars found" : "";
       })
       .addCase(fetchCars.rejected, (state, action) => {
         state.status = "failed";
