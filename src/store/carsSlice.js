@@ -85,7 +85,8 @@ const carsSlice = createSlice({
           state.list = [...state.list, ...cars];
         }
 
-        state.hasMore = state.list.length < total;
+        state.hasMore =
+          state.list.length < total && Object.keys(state.filters).length === 0;
         state.noMatchReason = state.list.length === 0 ? "No cars found" : "";
       })
       .addCase(fetchCars.rejected, (state, action) => {
