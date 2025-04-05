@@ -23,7 +23,13 @@ const BookingForm = () => {
   });
 
   const handleSubmit = (values, { resetForm }) => {
+    if (!startDate || !endDate) {
+      toast.error("Please select a booking date range.");
+      return;
+    }
+
     toast.success("✅ Thank you! Your booking was received.");
+
     resetForm();
     setDateRange([null, null]);
   };
@@ -35,67 +41,66 @@ const BookingForm = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue }) => (
-          <Form className={styles.form}>
-            <h3 className={styles.title}>Book your car now</h3>
-            <p className={styles.subtitle}>
-              Stay connected! We are always ready to help you.
-            </p>
+        <Form className={styles.form}>
+          <h3 className={styles.title}>Book your car now</h3>
+          <p className={styles.subtitle}>
+            Stay connected! We are always ready to help you.
+          </p>
 
-            <div>
-              <Field
-                name="name"
-                type="text"
-                placeholder="Name*"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-
-            <div>
-              <Field
-                name="email"
-                type="email"
-                placeholder="Email*"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-
-            <div className={styles.datePickerWrapper}>
-              <DatePicker
-                selectsRange
-                startDate={startDate}
-                endDate={endDate}
-                onChange={(update) => {
-                  setDateRange(update);
-                }}
-                className={styles.dateInput}
-                placeholderText="Booking date"
-                dateFormat="dd.MM.yyyy"
-              />
-            </div>
-
+          <div>
             <Field
-              as="textarea"
-              name="comment"
-              placeholder="Comment"
-              className={styles.textarea}
+              name="name"
+              type="text"
+              placeholder="Name*"
+              className={styles.input}
             />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className={styles.error}
+            />
+          </div>
 
-            <button type="submit" className={styles.button}>
-              Send
-            </button>
-          </Form>
-        )}
+          <div>
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email*"
+              className={styles.input}
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+
+          <div className={styles.datePickerWrapper}>
+            <DatePicker
+              selectsRange
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update) => {
+                setDateRange(update);
+              }}
+              className={styles.dateInput}
+              placeholderText="Booking date"
+              dateFormat="dd.MM.yyyy"
+              required
+            />
+          </div>
+
+          <Field
+            as="textarea"
+            name="comment"
+            placeholder="Comment"
+            className={styles.textarea}
+          />
+
+          <button type="submit" className={styles.button}>
+            Send
+          </button>
+        </Form>
       </Formik>
 
       <ToastContainer position="top-center" autoClose={3000} />

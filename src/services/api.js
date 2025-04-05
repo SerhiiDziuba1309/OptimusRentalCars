@@ -7,7 +7,7 @@ export const getBrands = async () => {
     );
     return response.data;
   } catch (error) {
-    console.error("Ошибка при получении брендов:", error);
-    throw new Error("Не удалось получить список брендов.");
+    console.error("Error while receiving:", error);
+    throw new Error("Failed to get list");
   }
 };
