@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCars, setFilters, nextPage } from "../store/carsSlice.js";
 import FilterBar from "../components/FilterBar.jsx";
 import CarCard from "../components/CarCard.jsx";
+import Loader from "../components/Loader.jsx";
 import styles from "../styles/CatalogPage.module.css";
 
 const CatalogPage = () => {
@@ -30,27 +31,15 @@ const CatalogPage = () => {
     (car, index, self) => index === self.findIndex((c) => c.id === car.id)
   );
 
-  const isFiltered =
-    Object.keys(filters).length > 0 &&
-    Object.values(filters).some((val) => val !== "");
-
   return (
     <div className={styles.container}>
       <FilterBar onFilterChange={handleFilterChange} />
 
-      {status === "loading" && list.length === 0 && (
-        <div className={styles.loading}>Loading...</div>
-      )}
-
-      {status === "succeeded" && list.length === 0 && isFiltered && (
+      {status === "loading" && list.length === 0 && <Loader />}
+      {status === "succeeded" && list.length === 0 && (
         <div className={styles.noResults}>{noMatchReason}</div>
       )}
-
-      {status === "succeeded" && list.length === 0 && !isFiltered && (
-        <div className={styles.noResults}>No cars available at the moment.</div>
-      )}
-
-      {error && <div className={styles.error}>{error}</div>}
+      {error && <div>{error}</div>}
 
       <div className={styles.grid}>
         {uniqueCars.map((car) => (
@@ -66,7 +55,7 @@ const CatalogPage = () => {
             disabled={status === "loading"}
           >
             {status === "loading" ? (
-              <span className={styles.spinner}></span>
+              <Loader small />
             ) : (
               <span className={styles.loadMoreText}>Load more</span>
             )}
