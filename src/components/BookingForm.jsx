@@ -1,84 +1,102 @@
-import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 import styles from "../styles/BookingForm.module.css";
 
 const BookingForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [comment, setComment] = useState("");
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const initialValues = {
+    name: "",
+    email: "",
+    comment: "",
+  };
 
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+  });
+
+  const handleSubmit = (values, { resetForm }) => {
     toast.success("✅ Thank you! Your booking was received.");
-
-    setName("");
-    setEmail("");
-    setStartDate(null);
-    setEndDate(null);
-    setComment("");
+    resetForm();
+    setDateRange([null, null]);
   };
 
   return (
     <>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <h3 className={styles.title}>Book your car now</h3>
-        <p className={styles.subtitle}>
-          Stay connected! We are always ready to help you.
-        </p>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ setFieldValue }) => (
+          <Form className={styles.form}>
+            <h3 className={styles.title}>Book your car now</h3>
+            <p className={styles.subtitle}>
+              Stay connected! We are always ready to help you.
+            </p>
 
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="Name*"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+            <div>
+              <Field
+                name="name"
+                type="text"
+                placeholder="Name*"
+                className={styles.input}
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className={styles.error}
+              />
+            </div>
 
-        <input
-          className={styles.input}
-          type="email"
-          placeholder="Email*"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+            <div>
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email*"
+                className={styles.input}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className={styles.error}
+              />
+            </div>
 
-        <div className={styles.datePickerWrapper}>
-          <DatePicker
-            selected={startDate}
-            onChange={(dates) => {
-              const [start, end] = dates;
-              setStartDate(start);
-              setEndDate(end);
-            }}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            placeholderText="Booking date"
-            dateFormat="dd.MM.yyyy"
-            className={styles.dateInput}
-            required
-          />
-        </div>
+            <div className={styles.datePickerWrapper}>
+              <DatePicker
+                selectsRange
+                startDate={startDate}
+                endDate={endDate}
+                onChange={(update) => {
+                  setDateRange(update);
+                }}
+                className={styles.dateInput}
+                placeholderText="Booking date"
+                dateFormat="dd.MM.yyyy"
+              />
+            </div>
 
-        <textarea
-          className={styles.textarea}
-          placeholder="Comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
+            <Field
+              as="textarea"
+              name="comment"
+              placeholder="Comment"
+              className={styles.textarea}
+            />
 
-        <button type="submit" className={styles.button}>
-          Send
-        </button>
-      </form>
+            <button type="submit" className={styles.button}>
+              Send
+            </button>
+          </Form>
+        )}
+      </Formik>
 
       <ToastContainer position="top-center" autoClose={3000} />
     </>
