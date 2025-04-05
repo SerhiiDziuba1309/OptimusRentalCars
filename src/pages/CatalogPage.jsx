@@ -7,9 +7,8 @@ import styles from "../styles/CatalogPage.module.css";
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
-  const { list, status, error, filters, page, hasMore } = useSelector(
-    (state) => state.cars
-  );
+  const { list, status, error, filters, page, hasMore, noMatchReason } =
+    useSelector((state) => state.cars);
 
   useEffect(() => {
     dispatch(setFilters({}));
@@ -31,17 +30,27 @@ const CatalogPage = () => {
     (car, index, self) => index === self.findIndex((c) => c.id === car.id)
   );
 
+  const isFiltered =
+    Object.keys(filters).length > 0 &&
+    Object.values(filters).some((val) => val !== "");
+
   return (
     <div className={styles.container}>
       <FilterBar onFilterChange={handleFilterChange} />
 
-      {status === "loading" && list.length === 0 && <div>Loading...</div>}
-      {status === "succeeded" && list.length === 0 && (
-        <div className={styles.noResults}>
-          No cars match your filter. Please try different values.
-        </div>
+      {status === "loading" && list.length === 0 && (
+        <div className={styles.loading}>Loading...</div>
       )}
-      {error && <div>{error}</div>}
+
+      {status === "succeeded" && list.length === 0 && isFiltered && (
+        <div className={styles.noResults}>{noMatchReason}</div>
+      )}
+
+      {status === "succeeded" && list.length === 0 && !isFiltered && (
+        <div className={styles.noResults}>No cars available at the moment.</div>
+      )}
+
+      {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.grid}>
         {uniqueCars.map((car) => (
