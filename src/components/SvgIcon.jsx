@@ -1,7 +1,9 @@
-const SvgIcon = ({ name, className = "", size = 16 }) => {
+import React from "react";
+
+const SvgIcon = ({ id, width = 16, height = 16, className = "" }) => {
   return (
-    <svg className={className} width={size} height={size}>
-      <use href={`/icons/sprite.svg#${name}`} />
+    <svg className={className} width={width} height={height}>
+      <use href={`/sprite.svg#${id}`} />
     </svg>
   );
 };

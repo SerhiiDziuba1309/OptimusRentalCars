@@ -1,8 +1,8 @@
 # OptimusRentalCars 🚗
 
-Фронтенд-додаток для компанії з оренди авто "RentalCar", розроблений на React + Redux.
+A frontend application for the car rental company "RentalCar", built with React and Redux Toolkit.
 
-## 🔧 Технології
+## 🔧 Technologies
 
 - React + Vite
 - Redux Toolkit
@@ -11,17 +11,21 @@
 - CSS Modules
 - react-icons
 
-## 📦 Основні функції
+## 📦 Key Features
 
-- Пошук та фільтрація автомобілів за брендом, ціною, пробігом
-- Додавання авто до обраного (збереження у localStorage)
-- Пагінація (Load More)
-- Сторінка деталей з формою бронювання
-- Нотифікація після бронювання
+- Search and filter cars by brand, price, and mileage
+- Add cars to favorites (saved in localStorage)
+- Pagination with "Load More" functionality
+- Car details page with a booking form
+- Notification after booking submission
 
-## 🚀 Запуск
+## 🚀 Getting Started
 
 ```bash
 npm install
 npm run dev
 ```
+
+## 👤 Author
+
+Developed by **Serhii Dziuba**

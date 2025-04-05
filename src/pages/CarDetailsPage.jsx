@@ -1,3 +1,4 @@
+// CarDetailsPage.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,7 +17,6 @@ const CarDetailsPage = () => {
         const response = await axios.get(
           `https://car-rental-api.goit.global/cars/${id}`
         );
-
         setCar(response.data);
       } catch (error) {
         console.error("Error loading car:", error);
@@ -44,7 +44,7 @@ const CarDetailsPage = () => {
         </h2>
 
         <div className={styles.metaRow}>
-          <SvgIcon name="location" className={styles.icon} />
+          <SvgIcon id="location" className={styles.icon} />
           <span className={styles.address}>
             {car.address.split(", ").slice(-2).join(", ")}
           </span>
@@ -64,7 +64,7 @@ const CarDetailsPage = () => {
               : [car.rentalConditions]
             ).map((item, idx) => (
               <li key={idx} className={styles.listItem}>
-                <SvgIcon name="check-circle" className={styles.icon} />
+                <SvgIcon id="check-circle" className={styles.icon} />
                 {item}
               </li>
             ))}
@@ -75,24 +75,20 @@ const CarDetailsPage = () => {
           <h3 className={styles.sectionTitle}>Car Specifications:</h3>
           <ul className={styles.list}>
             <li className={styles.listItem}>
-              <SvgIcon name="calendar" className={styles.icon} />
+              <SvgIcon id="calendar" className={styles.icon} />
               Year: {car.year}
             </li>
             <li className={styles.listItem}>
-              <SvgIcon name="car" className={styles.icon} />
+              <SvgIcon id="car" className={styles.icon} />
               Type: {car.type}
             </li>
             <li className={styles.listItem}>
-              <SvgIcon name="fuel-pump" className={styles.icon} />
+              <SvgIcon id="fuel-pump" className={styles.icon} />
               Fuel: {car.fuelConsumption}
             </li>
             <li className={styles.listItem}>
-              <SvgIcon name="gear" className={styles.icon} />
+              <SvgIcon id="gear" className={styles.icon} />
               Engine: {car.engineSize}
-            </li>
-            <li className={styles.listItem}>
-              <SvgIcon name="check-circle" className={styles.icon} />
-              Accessories: {car.accessories.length}
             </li>
           </ul>
         </div>
@@ -104,7 +100,7 @@ const CarDetailsPage = () => {
           <ul className={styles.list}>
             {car.accessories.map((item, i) => (
               <li key={i} className={styles.listItem}>
-                <SvgIcon name="check-circle" className={styles.icon} />
+                <SvgIcon id="check-circle" className={styles.icon} />
                 {item}
               </li>
             ))}
